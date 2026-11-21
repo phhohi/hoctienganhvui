@@ -1,0 +1,196 @@
+<title>Lớp 3 Review 2 Ôn tập Unit 6–10</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Nunito:wght@500;700;800&display=swap">
+<style>
+/* Layout: one centered play column; start screen -> question card -> result. Hue is set per unit. */
+:root{--hue:275;
+--bg:hsl(var(--hue) 45% 95%);--card:#fff;--fg:#1d2a3a;--muted:#56657a;
+--accent:hsl(var(--hue) 70% 42%);--accent-soft:hsl(var(--hue) 70% 92%);--on-accent:#fff;
+--ok:#1a7f45;--ok-soft:#dff5e8;--bad:#c23a3a;--bad-soft:#fde6e6;--line:hsl(var(--hue) 30% 82%);
+--display:"Baloo 2","Trebuchet MS",system-ui,sans-serif;--body:"Nunito",system-ui,-apple-system,"Segoe UI",sans-serif;}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+--bg:hsl(var(--hue) 25% 12%);--card:hsl(var(--hue) 20% 18%);--fg:#eef2f7;--muted:#a6b3c4;
+--accent:hsl(var(--hue) 75% 68%);--accent-soft:hsl(var(--hue) 30% 26%);--on-accent:#101820;
+--ok:#4cd68a;--ok-soft:#14382a;--bad:#ff8a8a;--bad-soft:#4a2020;--line:hsl(var(--hue) 20% 30%);color-scheme:dark}}
+:root[data-theme="dark"]{
+--bg:hsl(var(--hue) 25% 12%);--card:hsl(var(--hue) 20% 18%);--fg:#eef2f7;--muted:#a6b3c4;
+--accent:hsl(var(--hue) 75% 68%);--accent-soft:hsl(var(--hue) 30% 26%);--on-accent:#101820;
+--ok:#4cd68a;--ok-soft:#14382a;--bad:#ff8a8a;--bad-soft:#4a2020;--line:hsl(var(--hue) 20% 30%);color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-weight:700;font-size:18px;margin:0;
+padding-block:16px 28px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));-webkit-tap-highlight-color:transparent}
+.app{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+header{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.unit{background:var(--accent);color:var(--on-accent);font-family:var(--display);font-weight:800;border-radius:10px;padding:2px 12px;font-size:17px;letter-spacing:.03em}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(22px,5vw,32px);line-height:1.1;margin:0;flex:1;min-width:0;text-wrap:balance}
+.pill{border:2px solid var(--line);background:var(--card);border-radius:999px;padding:4px 14px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.snd{width:44px;height:44px;border-radius:50%;border:2px solid var(--line);background:var(--card);font-weight:800;font-size:15px;padding:0}
+.bar{height:12px;border-radius:99px;background:var(--accent-soft);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .3s}
+.card{background:var(--card);border:2px solid var(--line);border-radius:22px;padding:clamp(16px,4vw,28px);display:flex;flex-direction:column;gap:16px;min-width:0}
+.center{align-items:center;text-align:center}
+.kicker{color:var(--muted);font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.prompt{font-family:var(--display);font-weight:600;font-size:clamp(21px,4.6vw,28px);line-height:1.25;margin:0;text-wrap:balance}
+.ctx{color:var(--muted);font-size:16px;margin:-6px 0 0}
+.vis{display:flex;justify-content:center}
+.vis svg{width:min(210px,70%);height:auto;border:2px solid var(--line);border-radius:8px;display:block}
+.clock{background:#0f3b46;color:#7ff3ff;font-family:ui-monospace,Menlo,Consolas,monospace;border-radius:16px;padding:10px 22px;border:5px solid #1c6b7a;display:flex;align-items:baseline;gap:8px}
+.clock span{font-size:clamp(40px,11vw,60px);font-weight:800;letter-spacing:.04em}.clock small{font-size:20px}
+.cal{width:150px;border-radius:12px;overflow:hidden;border:2px solid var(--line);background:#fff;color:#1d2a3a;text-align:center}
+.cal b{display:block;background:#d64545;color:#fff;padding:5px;font-size:18px}.cal span{display:block;font-family:var(--display);font-weight:800;font-size:56px;line-height:1.1;padding:4px}
+.sws{display:flex;gap:12px}.sws i{display:block;width:96px;height:96px;border-radius:18px;border:3px solid var(--line)}
+.tagv{background:var(--accent-soft);color:var(--fg);border:2px dashed var(--accent);border-radius:14px;padding:10px 22px;font-family:var(--display);font-weight:800;font-size:30px}
+.tbl{border-collapse:collapse;font-size:14px;width:100%;max-width:560px;background:var(--card)}
+.tbl th,.tbl td{border:1px solid var(--line);padding:4px 6px;text-align:center}.tbl th{background:var(--accent-soft)}
+.scroll{overflow-x:auto;max-width:100%}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:10px}
+.opt{min-height:58px;border-radius:16px;border:2px solid var(--line);background:var(--card);padding:8px 14px;font-weight:800;font-size:19px;text-align:center;box-shadow:0 4px 0 var(--line);transition:transform .08s}
+.opt:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
+.opt.ok,.chip.ok,.mt.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok);box-shadow:0 4px 0 var(--ok)}
+.opt.bad,.chip.bad,.mt.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad);animation:sh .3s}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.typed{display:flex;gap:10px;flex-wrap:wrap}
+.typed input{flex:1;min-width:0;min-height:58px;border-radius:16px;border:2px solid var(--line);background:var(--card);color:var(--fg);padding:8px 16px;font:inherit;font-size:22px}
+.btn{min-height:52px;border-radius:14px;border:2px solid var(--accent);background:var(--accent);color:var(--on-accent);padding:8px 22px;font-weight:800;font-size:18px}
+.btn.alt{background:var(--card);color:var(--accent)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.slot,.bank{display:flex;flex-wrap:wrap;gap:8px;min-height:62px;padding:8px;border-radius:16px}
+.slot{border:2px dashed var(--accent);background:var(--accent-soft)}
+.chip{min-height:48px;border-radius:12px;border:2px solid var(--line);background:var(--card);padding:6px 14px;font-weight:800;font-size:19px;box-shadow:0 3px 0 var(--line)}
+.chip.sel,.mt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}.col{display:flex;flex-direction:column;gap:10px;min-width:0}
+.mt{min-height:54px;border-radius:14px;border:2px solid var(--line);background:var(--card);padding:6px 10px;font-weight:800;font-size:17px;overflow-wrap:anywhere}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px}
+.cat{border:2px solid var(--accent);border-radius:16px;background:var(--card);padding:10px;min-height:120px;text-align:left}
+.cat h3{margin:0 0 8px;font-family:var(--display);font-size:20px;color:var(--accent)}
+.cat .chip{margin:0 6px 6px 0;min-height:40px;font-size:17px}
+.fb{min-height:64px;border-radius:16px;padding:10px 16px;background:var(--accent-soft);color:var(--muted);font-size:17px}
+.fb.ok{background:var(--ok-soft);color:var(--ok)}.fb.bad{background:var(--bad-soft);color:var(--bad)}
+.fb b{display:block;font-family:var(--display);font-size:22px}
+.nav{display:flex;gap:10px;flex-wrap:wrap}.nav .grow{flex:1}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:12px;width:100%}
+.mode{border:3px solid var(--line);background:var(--card);border-radius:18px;padding:14px;text-align:left}
+.mode.on{border-color:var(--accent);background:var(--accent-soft)}
+.mode b{display:block;font-family:var(--display);font-size:22px}.mode span{color:var(--muted);font-size:16px}
+.big{font-family:var(--display);font-weight:800;font-size:clamp(44px,12vw,72px);color:var(--accent);line-height:1}
+.stars{font-size:38px;letter-spacing:.1em;color:#e6a700}
+.list{margin:0;padding-left:20px;color:var(--muted);font-size:17px;text-align:left}
+</style>
+<!-- lesson-nav:start --><style>
+/* Lesson navigation: home link + previous/next lesson within the same grade. */
+.lnav{max-width:760px;margin:0 auto 14px;display:flex;gap:8px;flex-wrap:wrap;align-items:stretch}
+.lnav.bottom{margin:18px auto 0}
+.lnav a,.lnav span.off{display:flex;flex-direction:column;justify-content:center;min-height:48px;padding:6px 14px;border-radius:14px;border:2px solid var(--line);background:var(--card);color:var(--fg);text-decoration:none;font-weight:800;font-size:16px;line-height:1.2;min-width:0}
+.lnav a:hover,.lnav a:focus-visible{border-color:var(--accent);outline:none}
+.lnav a small,.lnav span.off small{font-weight:700;font-size:13px;color:var(--muted);overflow-wrap:anywhere}
+.lnav .home{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.lnav .home small{color:inherit;opacity:.85}
+.lnav .prev,.lnav .next{flex:1 1 150px}
+.lnav .next{text-align:right}
+.lnav span.off{opacity:.45}
+@media (max-width:600px){.lnav:not(.bottom){flex-wrap:nowrap}.lnav:not(.bottom) small{display:none}.lnav:not(.bottom) a,.lnav:not(.bottom) span.off{white-space:nowrap;padding:6px 10px}.lnav:not(.bottom) .prev,.lnav:not(.bottom) .next{flex:1 1 0}}
+.lnav select{flex:1 1 100%;min-height:44px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--fg);font:inherit;font-size:16px;padding:4px 10px}
+</style><nav class="lnav" aria-label="Chuyển bài"><a class="home" href="../index.html#lop-3">⌂ Trang chủ<small>Lớp 3</small></a><a class="prev" href="unit-10.html">‹ Bài trước<small>Unit 10: Break time activities</small></a><a class="next" href="unit-11.html">Bài sau ›<small>Unit 11: My family</small></a></nav><!-- lesson-nav:end -->
+<div class="app" id="app"></div>
+<!-- lesson-nav:start --><nav class="lnav bottom" aria-label="Chuyển bài"><a class="home" href="../index.html#lop-3">⌂ Trang chủ<small>Lớp 3</small></a><a class="prev" href="unit-10.html">‹ Bài trước<small>Unit 10: Break time activities</small></a><a class="next" href="unit-11.html">Bài sau ›<small>Unit 11: My family</small></a><select aria-label="Chọn bài khác trong Lớp 3" onchange="location.href=this.value"><option value="starter.html">Starter: Numbers and the alphabet</option><option value="unit-1.html">Unit 1: Hello</option><option value="unit-2.html">Unit 2: Our names</option><option value="unit-3.html">Unit 3: Our friends</option><option value="unit-4.html">Unit 4: Our bodies</option><option value="unit-5.html">Unit 5: My hobbies</option><option value="review-1.html">Review 1: Ôn tập Unit 1–5</option><option value="unit-6.html">Unit 6: Our school</option><option value="unit-7.html">Unit 7: Classroom instructions</option><option value="unit-8.html">Unit 8: My school things</option><option value="unit-9.html">Unit 9: Colours</option><option value="unit-10.html">Unit 10: Break time activities</option><option value="review-2.html" selected>Review 2: Ôn tập Unit 6–10</option><option value="unit-11.html">Unit 11: My family</option><option value="unit-12.html">Unit 12: Jobs</option><option value="unit-13.html">Unit 13: My house</option><option value="unit-14.html">Unit 14: My bedroom</option><option value="unit-15.html">Unit 15: At the dining table</option><option value="review-3.html">Review 3: Ôn tập Unit 11–15</option><option value="unit-16.html">Unit 16: My pets</option><option value="unit-17.html">Unit 17: Our toys</option><option value="unit-18.html">Unit 18: Playing and doing</option><option value="unit-19.html">Unit 19: Outdoor activities</option><option value="unit-20.html">Unit 20: At the zoo</option><option value="review-4.html">Review 4: Ôn tập Unit 16–20</option></select></nav><!-- lesson-nav:end -->
+<script>
+(function(){
+var U={"tag":"Review 2","title":"Ôn tập Unit 6–10","sub":"Ôn trường học, câu lệnh, đồ dùng, màu sắc, giờ ra chơi.","book":"Tiếng Anh 3 · Global Success · Tập 1","qs":[{"t":"c","p":"Is this our library? — Yes, it ___.","e":"Yes, it is.","o":["is","isn't","am"]},{"t":"c","p":"Let's go to the gym. — ___, let's go.","e":"OK, let's go.","o":["OK","Bye","Fine"]},{"t":"c","p":"___ down, please!","e":"Sit down, please!","o":["Sit","Close","Speak"]},{"t":"c","p":"May I come in? — Yes, you ___.","e":"Yes, you can.","o":["can","can't","do"]},{"t":"c","p":"Do you have a ruler? — Yes, I ___.","e":"Yes, I do.","o":["do","don't","am"]},{"t":"c","p":"I have a ___. (cây bút chì)","e":"pencil = bút chì.","o":["pencil","book","school bag"]},{"t":"c","p":"What colour is it? — It's ___.","e":"Màu xanh lá = green.","v":{"k":"sw","c":"#1c9a3f"},"o":["green","red","black"]},{"t":"c","p":"What colour are they? — They're ___.","e":"Màu xanh dương = blue.","v":{"k":"sw","c":"#1f5fd1","n":2},"o":["blue","white","brown"]},{"t":"c","p":"I play ___ at break time. (bóng đá)","e":"football = bóng đá.","o":["football","chess","table tennis"]},{"t":"c","p":"What do you do at break time? — I ___ chess.","e":"I play chess.","o":["play","am","like"]},{"t":"m","p":"Ghép từ với nghĩa tiếng Việt.","e":"","pairs":[["classroom","lớp học"],["eraser","cục tẩy"],["stand up","đứng lên"],["table tennis","bóng bàn"]]},{"t":"m","p":"Ghép câu hỏi với câu trả lời.","e":"","pairs":[["Is this our school?","Yes, it is."],["May I go out?","No, you can't."],["Do you have a pen?","No, I don't."],["What colour is it?","It's yellow."]]},{"t":"o","p":"Sắp xếp các từ thành câu đúng.","e":"","s":"Is this our classroom?","w":["Is","this","our","classroom?"]},{"t":"o","p":"Sắp xếp các từ thành câu đúng.","e":"","s":"Stand up, please!","w":["Stand","up,","please!"]},{"t":"o","p":"Sắp xếp các từ thành câu đúng.","e":"","s":"What colour is it?","w":["What","colour","is","it?"]},{"t":"o","p":"Sắp xếp các từ thành câu đúng.","e":"","s":"I play basketball at break time.","w":["I","play","basketball","at","break","time."]}]};
+var $=function(s,r){return(r||document).querySelector(s)};
+var app=document.getElementById('app');
+var mode='mc',order=[],qi=0,score=0,tries=0,solved=false,sound=true,S={};
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function shuf(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t}return a}
+function norm(s){return String(s).toLowerCase().replace(/[’‘`]/g,"'").replace(/'/g,'').replace(/[.,!?;:"]/g,'').replace(/\s+/g,' ').trim()}
+/* sound */
+var AC=null;
+function tone(f,d,t){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();var o=AC.createOscillator(),g=AC.createGain();o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(.001,AC.currentTime+t);g.gain.exponentialRampToValueAtTime(.18,AC.currentTime+t+.02);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+t+d);o.connect(g);g.connect(AC.destination);o.start(AC.currentTime+t);o.stop(AC.currentTime+t+d+.05)}catch(e){}}
+function sfx(ok){if(!sound)return;if(ok){tone(660,.15,0);tone(880,.25,.14)}else{tone(220,.3,0)}}
+/* visuals */
+function star(cx,cy,r,f){var p=[];for(var i=0;i<10;i++){var a=Math.PI/5*i-Math.PI/2,R=i%2?r*.382:r;p.push((cx+R*Math.cos(a)).toFixed(2)+','+(cy+R*Math.sin(a)).toFixed(2))}return'<polygon points="'+p.join(' ')+'" fill="'+f+'"/>'}
+var jack='<rect width="60" height="40" fill="#012169"/><path d="M0 0L60 40M60 0L0 40" stroke="#fff" stroke-width="8"/><path d="M0 0L60 40M60 0L0 40" stroke="#C8102E" stroke-width="3"/><path d="M30 0V40M0 20H60" stroke="#fff" stroke-width="13"/><path d="M30 0V40M0 20H60" stroke="#C8102E" stroke-width="8"/>';
+function stripes(n,h,a,b){var s='';for(var i=0;i<n;i++)s+='<rect y="'+(i*h)+'" width="60" height="'+(h+.05)+'" fill="'+(i%2?b:a)+'"/>';return s}
+var FL={
+vn:'<rect width="60" height="40" fill="#DA251D"/>'+star(30,21,12,'#FFFF00'),
+gb:jack,
+us:stripes(13,40/13,'#B22234','#fff')+'<rect width="26" height="21.5" fill="#3C3B6E"/>'+(function(){var s='';for(var r=0;r<5;r++)for(var c=0;c<6;c++)s+='<circle cx="'+(2.5+c*4.2)+'" cy="'+(2.5+r*4)+'" r=".9" fill="#fff"/>';return s})(),
+au:'<rect width="60" height="40" fill="#012169"/><svg x="0" y="0" width="30" height="20" viewBox="0 0 60 40" preserveAspectRatio="none">'+jack+'</svg>'+star(15,30,5,'#fff')+star(45,8,2.4,'#fff')+star(52,18,2.4,'#fff')+star(38,19,2.4,'#fff')+star(45,32,2.4,'#fff'),
+jp:'<rect width="60" height="40" fill="#fff"/><circle cx="30" cy="20" r="12" fill="#BC002D"/>',
+sg:'<rect width="60" height="20" fill="#EF3340"/><rect y="20" width="60" height="20" fill="#fff"/><circle cx="13" cy="10" r="6.5" fill="#fff"/><circle cx="15.5" cy="10" r="6.5" fill="#EF3340"/>'+[0,1,2,3,4].map(function(i){var a=i*Math.PI*2/5-Math.PI/2;return star(23+4.3*Math.cos(a),10+4.3*Math.sin(a),1.6,'#fff')}).join(''),
+my:stripes(14,40/14,'#CC0001','#fff')+'<rect width="30" height="22.9" fill="#010066"/><circle cx="12" cy="11.4" r="7" fill="#FC0"/><circle cx="14" cy="11.4" r="5.6" fill="#010066"/>'+star(21,11.4,4,'#FC0'),
+th:'<rect width="60" height="40" fill="#A51931"/><rect y="6.67" width="60" height="26.67" fill="#F4F5F8"/><rect y="13.33" width="60" height="13.34" fill="#2D2A4A"/>'
+};
+function vis(v){if(!v)return'';var h='';
+if(v.k==='flag')h='<svg viewBox="0 0 60 40" role="img" aria-label="flag">'+FL[v.c]+'</svg>';
+else if(v.k==='clock'){var p=v.t.split(' ');h='<div class="clock"><span>'+esc(p[0])+'</span><small>'+esc(p[1]||'')+'</small></div>'}
+else if(v.k==='cal')h='<div class="cal"><b>'+esc(v.d)+'</b><span>'+esc(v.n)+'</span></div>';
+else if(v.k==='sw')h='<div class="sws">'+Array(v.n||1).fill(0).map(function(){return'<i style="background:'+v.c+'"></i>'}).join('')+'</div>';
+else if(v.k==='tag')h='<div class="tagv">'+esc(v.t)+'</div>';
+else if(v.k==='table'){h='<div class="scroll"><table class="tbl"><tr>'+v.h.map(function(x){return'<th>'+esc(x)+'</th>'}).join('')+'</tr>'+v.r.map(function(r){return'<tr>'+r.map(function(x){return'<td>'+esc(x)+'</td>'}).join('')+'</tr>'}).join('')+'</table></div>'}
+return'<div class="vis">'+h+'</div>'}
+/* screens */
+function start(){
+app.innerHTML='<header><span class="unit">'+esc(U.tag)+'</span><h1>'+esc(U.title)+'</h1></header>'+
+'<div class="card center"><p class="kicker">'+esc(U.book||'Tiếng Anh 4 · Global Success')+'</p><p class="prompt">'+esc(U.sub)+'</p>'+
+'<p class="ctx">'+U.qs.length+' câu. Làm đúng ngay lần đầu để được điểm.</p>'+
+'<div class="modes"><button class="mode" id="m-mc"><b>Trắc nghiệm</b><span>Chạm vào đáp án đúng.</span></button><button class="mode" id="m-sa"><b>Trả lời ngắn</b><span>Tự gõ đáp án vào ô trống.</span></button></div>'+
+'<button class="btn" id="go">Bắt đầu chơi</button></div>';
+function sel(){$('#m-mc').classList.toggle('on',mode==='mc');$('#m-sa').classList.toggle('on',mode==='sa')}
+$('#m-mc').onclick=function(){mode='mc';sel()};$('#m-sa').onclick=function(){mode='sa';sel()};sel();
+$('#go').onclick=function(){order=shuf(U.qs);qi=0;score=0;if(!AC)tone(1,.01,0);play()}}
+function head(){return'<header><span class="unit">'+esc(U.tag)+'</span><h1>'+esc(U.title)+'</h1><span class="pill" id="sc">Điểm: '+score+'</span><button class="snd" id="snd" aria-label="Bật tắt âm thanh">'+(sound?'Âm':'Tắt')+'</button></header><div class="bar"><i style="width:'+(qi/order.length*100)+'%"></i></div>'}
+function play(){
+if(qi>=order.length)return end();
+var q=order[qi];window.__cur=q;tries=0;solved=false;S={};
+var body='<p class="kicker">Câu '+(qi+1)+' / '+order.length+'</p><p class="prompt">'+esc(q.p)+'</p>'+(q.x?'<p class="ctx">'+esc(q.x)+'</p>':'')+vis(q.v)+'<div id="area"></div>';
+app.innerHTML=head()+'<div class="card">'+body+'</div><div class="fb" id="fb" role="status" aria-live="polite">Chọn hoặc nhập đáp án của em.</div><div class="nav"><button class="btn alt" id="redo">Làm lại</button><button class="btn alt" id="show" hidden>Xem đáp án</button><span class="grow"></span><button class="btn" id="next" disabled>'+(qi===order.length-1?'Xem kết quả':'Tiếp theo')+'</button></div>';
+$('#snd').onclick=function(){sound=!sound;$('#snd').textContent=sound?'Âm':'Tắt'};
+$('#redo').onclick=function(){play2(true)};$('#next').onclick=function(){qi++;play()};$('#show').onclick=reveal;
+mount(q)}
+function play2(){var q=order[qi];tries=0;solved=false;S={};$('#fb').className='fb';$('#fb').textContent='Chọn hoặc nhập đáp án của em.';$('#next').disabled=true;$('#show').hidden=true;mount(q)}
+function mount(q){var a=$('#area');
+if(q.t==='c')mode==='mc'?mkChoice(a,q):mkTyped(a,q);
+else if(q.t==='o')mkOrder(a,q);else if(q.t==='m')mkMatch(a,q);else mkSort(a,q)}
+function answerText(q){if(q.t==='c')return q.o[0];if(q.t==='o')return q.s;if(q.t==='m')return q.pairs.map(function(p){return p[0]+' = '+p[1]}).join(' · ');return q.items.map(function(i){return i[0]+' → '+q.cats[i[1]]}).join(' · ')}
+function good(q){solved=true;if(tries===0){score++;$('#sc').textContent='Điểm: '+score}sfx(true);
+var f=$('#fb');f.className='fb ok';f.innerHTML='<b>Chính xác!</b>'+(q.e?esc(q.e):'');$('#next').disabled=false;$('#show').hidden=true;$('#next').focus&&0}
+function wrong(q,hint){tries++;sfx(false);var f=$('#fb');f.className='fb bad';f.innerHTML='<b>Chưa chính xác. Thử lại nhé!</b>'+(hint?esc(hint):'');if(tries>=3)$('#show').hidden=false}
+function reveal(){var q=order[qi];solved=true;var f=$('#fb');f.className='fb';f.innerHTML='<b>Đáp án</b>'+esc(answerText(q))+(q.e?' · '+esc(q.e):'');$('#next').disabled=false;$('#show').hidden=true;
+document.querySelectorAll('#area button,#area input').forEach(function(b){b.disabled=true})}
+function mkChoice(a,q){var os=shuf(q.o);a.innerHTML='<div class="opts">'+os.map(function(o,i){return'<button class="opt" data-i="'+i+'">'+esc(o)+'</button>'}).join('')+'</div>';
+a.querySelectorAll('.opt').forEach(function(b){b.onclick=function(){if(solved)return;var o=os[+b.dataset.i];if(o===q.o[0]){b.classList.add('ok');good(q)}else{b.classList.add('bad');wrong(q,'Gợi ý: '+(q.h||'đọc lại câu hỏi thật kĩ.'));setTimeout(function(){b.classList.remove('bad')},500)}}})}
+function mkTyped(a,q){a.innerHTML='<div class="typed"><input id="ans" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" aria-label="Đáp án" placeholder="Gõ đáp án..."><button class="btn" id="chk">Kiểm tra</button></div>';
+var inp=$('#ans');function chk(){if(solved)return;var v=inp.value;if(!norm(v))return;if(norm(v)===norm(q.o[0])){inp.disabled=true;good(q)}else{var c=q.o[0];wrong(q,'Gợi ý: đáp án bắt đầu bằng "'+c.charAt(0)+'" và có '+c.split(' ').length+' từ.')}}
+$('#chk').onclick=chk;inp.onkeydown=function(e){if(e.key==='Enter')chk()};inp.focus()}
+function mkOrder(a,q){S.bank=shuf(q.w.map(function(w,i){return{w:w,id:i}}));S.put=[];
+function draw(){a.innerHTML='<div class="slot" id="slot" aria-label="Câu của em">'+S.put.map(function(t){return'<button class="chip" data-id="'+t.id+'" data-s="1">'+esc(t.w)+'</button>'}).join('')+'</div><div class="bank">'+S.bank.map(function(t){return'<button class="chip" data-id="'+t.id+'">'+esc(t.w)+'</button>'}).join('')+'</div><button class="btn" id="chk">Kiểm tra</button>';
+a.querySelectorAll('.chip').forEach(function(b){b.onclick=function(){if(solved)return;var id=+b.dataset.id;if(b.dataset.s){var t=S.put.find(function(x){return x.id===id});S.put=S.put.filter(function(x){return x.id!==id});S.bank.push(t)}else{var t2=S.bank.find(function(x){return x.id===id});S.bank=S.bank.filter(function(x){return x.id!==id});S.put.push(t2)}draw()}});
+$('#chk').onclick=function(){if(solved||!S.put.length)return;var s=S.put.map(function(t){return t.w}).join(' ');if(norm(s)===norm(q.s)){$('#slot').querySelectorAll('.chip').forEach(function(c){c.classList.add('ok')});good(q)}else{wrong(q,'Gợi ý: câu bắt đầu bằng "'+q.w[0]+'".')}}}
+draw()}
+function mkMatch(a,q){var L=q.pairs.map(function(p,i){return{t:p[0],i:i}}),R=shuf(q.pairs.map(function(p,i){return{t:p[1],i:i}}));S.sel=null;S.done=0;S.mis=0;
+a.innerHTML='<div class="cols"><div class="col" id="cl"></div><div class="col" id="cr"></div></div>';
+L.forEach(function(x){var b=document.createElement('button');b.className='mt';b.textContent=x.t;b.dataset.i=x.i;b.dataset.side='l';$('#cl').appendChild(b)});
+R.forEach(function(x){var b=document.createElement('button');b.className='mt';b.textContent=x.t;b.dataset.i=x.i;b.dataset.side='r';$('#cr').appendChild(b)});
+a.querySelectorAll('.mt').forEach(function(b){b.onclick=function(){if(solved||b.classList.contains('ok'))return;
+if(b.dataset.side==='l'){a.querySelectorAll('.mt[data-side=l]').forEach(function(x){x.classList.remove('sel')});b.classList.add('sel');S.sel=b;return}
+if(!S.sel){var f=$('#fb');f.className='fb';f.textContent='Chọn một ô bên trái trước.';return}
+if(S.sel.dataset.i===b.dataset.i){S.sel.classList.remove('sel');S.sel.classList.add('ok');b.classList.add('ok');S.sel=null;S.done++;if(S.done===q.pairs.length)good(q);else{var f2=$('#fb');f2.className='fb ok';f2.innerHTML='<b>Đúng một cặp!</b>Ghép tiếp nhé.'}}
+else{b.classList.add('bad');setTimeout(function(){b.classList.remove('bad')},500);wrong(q,'Cặp này chưa khớp.');}}})}
+function mkSort(a,q){S.items=shuf(q.items.map(function(x,i){return{w:x[0],c:x[1],id:i}}));S.sel=null;S.in=q.cats.map(function(){return[]});
+function draw(){a.innerHTML='<div class="bank">'+S.items.map(function(t){return'<button class="chip'+(S.sel===t.id?' sel':'')+'" data-id="'+t.id+'">'+esc(t.w)+'</button>'}).join('')+'</div><div class="cats">'+q.cats.map(function(c,i){return'<button class="cat" data-c="'+i+'"><h3>'+esc(c)+'</h3>'+S.in[i].map(function(t){return'<span class="chip ok">'+esc(t.w)+'</span>'}).join('')+'</button>'}).join('')+'</div>';
+a.querySelectorAll('.bank .chip').forEach(function(b){b.onclick=function(){if(solved)return;S.sel=+b.dataset.id;draw()}});
+a.querySelectorAll('.cat').forEach(function(b){b.onclick=function(){if(solved)return;if(S.sel===null){var f=$('#fb');f.className='fb';f.textContent='Chọn một từ trước, rồi chọn nhóm.';return}
+var t=S.items.find(function(x){return x.id===S.sel}),c=+b.dataset.c;
+if(t.c===c){S.items=S.items.filter(function(x){return x.id!==t.id});S.in[c].push(t);S.sel=null;draw();if(!S.items.length)good(q);else{var f2=$('#fb');f2.className='fb ok';f2.innerHTML='<b>Đúng rồi!</b>Phân loại tiếp nhé.'}}
+else{wrong(q,'"'+t.w+'" không thuộc nhóm này.');S.sel=null;draw()}}})}
+draw()}
+function end(){var pct=score/order.length,st=pct>=.9?'3 sao':pct>=.6?'2 sao':'1 sao';
+var star=pct>=.9?'★★★':pct>=.6?'★★☆':'★☆☆';
+app.innerHTML=head()+'<div class="card center"><p class="kicker">Hoàn thành</p><div class="big">'+score+' / '+order.length+'</div><div class="stars" aria-label="'+st+'">'+star+'</div><p class="prompt">'+(pct>=.9?'Giỏi lắm! Em nắm bài rất chắc.':pct>=.6?'Khá tốt! Chơi lại để đạt điểm cao hơn nhé.':'Cố gắng lên! Chơi lại để luyện thêm nhé.')+'</p><div class="nav"><button class="btn" id="again">Chơi lại</button><button class="btn alt" id="home">Đổi chế độ</button></div></div>';
+$('#again').onclick=function(){order=shuf(U.qs);qi=0;score=0;play()};$('#home').onclick=start;$('#snd').onclick=function(){sound=!sound;$('#snd').textContent=sound?'Âm':'Tắt'};sfx(true)}
+start();
+})();
+</script>
